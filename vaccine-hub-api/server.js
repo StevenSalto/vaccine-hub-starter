@@ -1,13 +1,14 @@
 const express = require("express");
 const cors = require("cors");
 const {BadRequestError, NotFoundError} = require("./utils/errors");
-const { reset } = require("nodemon");
+const { PORT } = require("./config")
+const authRoutes = require("./routes/auth")
+
 const app = express();
 
 app.use(cors());
 app.use(express.json());
-
-const PORT = process.env.PORT || 3001;
+app.use("/auth", authRoutes)
 
 app.use((req, res, next) => {
     return next(new NotFoundError())
